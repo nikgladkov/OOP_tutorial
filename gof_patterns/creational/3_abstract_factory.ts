@@ -1,3 +1,5 @@
+//Фабрика создает семейства объектов
+
 interface EngineStarter {
   start(): void;
 }

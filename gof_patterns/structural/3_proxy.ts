@@ -1,3 +1,5 @@
+//Слой прокси
+
 interface PaymentMaker {
   startPayment(paymentData: string): void;
   getActiveTransactions(): Map<number, string>;

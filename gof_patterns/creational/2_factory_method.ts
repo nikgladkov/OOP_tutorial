@@ -1,3 +1,4 @@
+//Вызов метода фабрики дает объект когда нужно
 interface Transport {
   //шаблон для всех объектов Transport
   drive(): void;

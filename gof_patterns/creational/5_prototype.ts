@@ -1,3 +1,4 @@
+//клонирование протипа
 interface Prototype {
   clone(): Prototype;
 }

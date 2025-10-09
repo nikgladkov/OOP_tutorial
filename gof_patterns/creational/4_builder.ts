@@ -1,3 +1,4 @@
+//Конструктор объектов из готовых деталей
 interface Builder {
   createHead(): void;
   createFangs(): void;

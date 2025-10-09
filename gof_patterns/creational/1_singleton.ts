@@ -1,3 +1,4 @@
+//Один объект класса и все
 //Goal: Singleton object that creates and keeps a connection to the DB. UseCache - a flag that can be set.
 
 class DbConnector {

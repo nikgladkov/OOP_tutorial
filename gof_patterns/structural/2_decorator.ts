@@ -1,3 +1,4 @@
+//Обертка
 interface IndexConnector {
   host: string;
   testConnection(): void;
