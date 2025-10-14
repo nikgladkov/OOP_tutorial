@@ -1,14 +1,11 @@
+//Фасад - клавиатура синтезатора
 interface SoundUnit {
   generate(voltage: number): void;
 }
 
 class VCOunit implements SoundUnit {
   generate(voltage: number): void {
-    if (voltage > 0 && voltage < 10) {
-      console.log(`Saw*${voltage}`);
-    } else {
-      console.log("Voltage out of range. Enjoy the silence");
-    }
+    console.log(`Saw*${voltage}`);
   }
 }
 
@@ -39,4 +36,4 @@ class AnalogSynthFacade {
 
 //client
 const syntFacade = new AnalogSynthFacade();
-syntFacade.play(50)
+syntFacade.play(1);
