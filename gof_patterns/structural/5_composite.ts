@@ -1,3 +1,5 @@
+//подсчет дерева tax
+
 interface TaxSource {
   returnTax(): number;
   print(indent?: number): void;
@@ -62,7 +64,7 @@ class TaxLinesGroup implements TaxSource {
     console.log(`${spaces}+ ${this.name} (base: ${this.baseAmount})`);
 
     for (const [, child] of this.subTaxLinesArray) {
-      child.print(indent + 2); // рекурсия с увеличением отступа
+      child.print(indent + 2);
     }
 
     console.log(`${spaces}= subtotal: ${this.returnTax()}`);
@@ -91,42 +93,39 @@ class TotalTax {
 }
 
 //client
-//mock product
-const productSize = 50;
-const productWeight = 10;
 
 //Tax tree:
-// Total Tax
-// - General Tax
-// - Federal Tax
-// - Shipping Tax
-// -- Base
-// -- State
-// -- Handling
-// -- Box
-// --- pack fee
-// --- post fee
+// Total Tax 0
+// - General Tax 10
+// - Federal Tax 7.99
+// - Shipping Tax 0
+// -- Base 0.99
+// -- State 12
+// -- Handling 2.99
+// -- Box 0
+// --- pack fee 5
+// --- post fee 3
 
-const generalTax = new TaxLine("General tax", 5);
-const federalTax = new TaxLine("Federal Tax", 5);
+const generalTax = new TaxLine("General tax", 10);
+const federalTax = new TaxLine("Federal Tax", 7.99);
 
-const shippingBase = new TaxLine("Base", 5);
-const shippingState = new TaxLine("State", 5);
-const ShippingHandling = new TaxLine("Handling", 5);
+const shippingBase = new TaxLine("Base", 0.99);
+const shippingState = new TaxLine("State", 12);
+const ShippingHandling = new TaxLine("Handling", 2.99);
 
 const shippingPackFee = new TaxLine("Pack Fee", 5);
-const shippingPostFee = new TaxLine("Post Fee", 5);
-const shippingBoxGroup = new TaxLinesGroup("Box", 5);
+const shippingPostFee = new TaxLine("Post Fee", 3);
+const shippingBoxGroup = new TaxLinesGroup("Box", 0);
 shippingBoxGroup.add(1, shippingPackFee);
 shippingBoxGroup.add(2, shippingPostFee);
 
-const shippingTaxGroup = new TaxLinesGroup("Shipping Tax", 5);
+const shippingTaxGroup = new TaxLinesGroup("Shipping Tax", 0);
 shippingTaxGroup.add(1, shippingBase);
 shippingTaxGroup.add(2, shippingState);
 shippingTaxGroup.add(3, ShippingHandling);
 shippingTaxGroup.add(4, shippingBoxGroup);
 
-const totalTaxGroup = new TaxLinesGroup("Total tax", 5);
+const totalTaxGroup = new TaxLinesGroup("Total tax", 0);
 totalTaxGroup.add(1, generalTax);
 totalTaxGroup.add(2, federalTax);
 totalTaxGroup.add(3, shippingTaxGroup);
@@ -135,3 +134,20 @@ const totalTax = new TotalTax(totalTaxGroup);
 
 totalTax.printTree();
 totalTax.get();
+
+// === TAX TREE ===
+// + Total tax (base: 0)
+//   - General tax: 10
+//   - Federal Tax: 7.99
+//   + Shipping Tax (base: 0)
+//     - Base: 0.99
+//     - State: 12
+//     - Handling: 2.99
+//     + Box (base: 0)
+//       - Pack Fee: 5
+//       - Post Fee: 3
+//     = subtotal: 8
+//   = subtotal: 23.98
+// = subtotal: 41.97
+// ================
+// TOTAL TAX = 41.97
