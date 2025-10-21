@@ -1,4 +1,4 @@
-// Sending 100 test various orders based on the template OrderJSON
+// Sending n test various orders based on the template OrderJSON with a static and heavy meta field
 
 import { ShippingMethod, TaxRegion, OrderJSON } from "./types";
 import { GetRandomNumber } from "./utils";
